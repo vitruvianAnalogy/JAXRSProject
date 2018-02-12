@@ -17,7 +17,7 @@ public class MessageResource {
 	MessageService messageService = new MessageService();
 
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Message> getMessages(){
 		return messageService.getAllMessages();
 	}
@@ -25,7 +25,7 @@ public class MessageResource {
 	//How to accept parameters in the url path, for e.g. /messages/1, to accept 1 or 2 , etc.
 	@GET
 	@Path("/{messageId}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Message getMessage(@PathParam("messageId") long messageId){ //Automatic conversion from String to long, can lead to error if a bad value is passed
 		return messageService.getMessage(messageId);
 	}

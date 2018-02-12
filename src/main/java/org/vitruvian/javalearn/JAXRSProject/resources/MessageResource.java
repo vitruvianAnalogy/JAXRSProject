@@ -2,7 +2,9 @@ package org.vitruvian.javalearn.JAXRSProject.resources;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,5 +30,12 @@ public class MessageResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Message getMessage(@PathParam("messageId") long messageId){ //Automatic conversion from String to long, can lead to error if a bad value is passed
 		return messageService.getMessage(messageId);
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message addMessage(Message message){
+		return messageService.addMessage(message);
 	}
 }

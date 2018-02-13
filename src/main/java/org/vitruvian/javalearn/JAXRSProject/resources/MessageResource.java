@@ -2,6 +2,7 @@ package org.vitruvian.javalearn.JAXRSProject.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,6 +15,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.vitruvian.javalearn.JAXRSProject.model.Message;
+import org.vitruvian.javalearn.JAXRSProject.resources.beans.MessageFilterBean;
 import org.vitruvian.javalearn.JAXRSProject.service.MessageService;
 
 @Path("messages")
@@ -32,6 +34,18 @@ public class MessageResource {
 			return messageService.getAllMessagesPaginated(start, size);
 		return messageService.getAllMessages();
 	}
+	
+	//This method is used to understand Bean Param and does the exact same job as "getMessages" method
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Message> duplicateGetMessages(@BeanParam MessageFilterBean filterBean){
+		if (filterBean.getYear() > 0)
+			return messageService.getAllMessagesForYear(filterBean.getYear());
+		if(filterBean.getStart()>=0 && filterBean.getSize() >=0)
+			return messageService.getAllMessagesPaginated(filterBean.getStart(), filterBean.getSize());
+		return messageService.getAllMessages();
+	}
+	
 	
 	//How to accept parameters in the url path, for e.g. /messages/1, to accept 1 or 2 , etc.
 	@GET
